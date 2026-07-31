@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Form and Media Elements</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf6ff;
+            margin: 20px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            width: 80%;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: darkblue;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        fieldset {
+            margin-top: 20px;
+            border: 2px solid blue;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+            margin: 5px;
+        }
+
+        input, select, textarea {
+            padding: 5px;
+            margin: 5px;
+        }
+
+        footer {
+            background-color: darkblue;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header Section -->
+    <h1>HTML5 Form and Media Elements</h1>
+
+    <p align="center">
+        Student Registration and Multimedia Webpage
+    </p>
+
+
+    <!-- Image Section -->
+    <h2>Profile Image</h2>
+
+    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140037.png"
+        alt="Boy Profile Image"
+        width="250">
+
+
+    <!-- Navigation Links -->
+    <h2>Useful Links</h2>
+
+    <a href="https://www.w3schools.com/html/" target="_blank">
+        Learn HTML5
+    </a>
+
+
+    <!-- Table Section -->
+    <h2>Course Details</h2>
+
+    <table>
+
+        <tr>
+            <th>Course</th>
+            <th>Duration</th>
+            <th>Technology</th>
+        </tr>
+
+        <tr>
+            <td>Web Development</td>
+            <td>3 Months</td>
+            <td>HTML5</td>
+        </tr>
+
+        <tr>
+            <td>Programming</td>
+            <td>4 Months</td>
+            <td>Java</td>
+        </tr>
+
+        <tr>
+            <td>Database</td>
+            <td>2 Months</td>
+            <td>SQL</td>
+        </tr>
+
+    </table>
+
+
+    <!-- Form Section -->
+
+    <h2>Personal Information Form</h2>
+
+    <form action="/action_page.php" method="get">
+
+        <fieldset>
+
+            <legend>Personal Information</legend>
+
+            <label>Username:</label>
+            <input type="text" name="username" placeholder="Enter username">
+            <br>
+
+            <label>Password:</label>
+            <input type="password" name="password">
+            <br>
+
+            <label>Register Number:</label>
+            <input type="text">
+            <br>
+
+            <label>Age:</label>
+            <input type="number">
+            <br>
+
+            <label>Gender:</label>
+
+            <input type="radio" name="gender"> Male
+            <input type="radio" name="gender"> Female
+            <br>
+
+            <label>Date of Birth:</label>
+            <input type="date">
+            <br>
+
+            <label>Favorite Color:</label>
+            <input type="color">
+            <br>
+
+            <label>Upload Photo:</label>
+            <input type="file">
+            <br>
+
+            <label>Select Course:</label>
+
+            <select>
+                <option>HTML5</option>
+                <option>CSS3</option>
+                <option>Java</option>
+                <option>Python</option>
+            </select>
+
+            <br>
+
+            <label>Skills:</label>
+
+            <input type="checkbox"> C
+            <input type="checkbox"> Java
+            <input type="checkbox"> PHP
+            <input type="checkbox"> Javascript
+
+            <br>
+
+            <label>Address:</label>
+
+            <textarea rows="4" cols="30">
+            </textarea>
+
+            <br>
+
+            <label>Mobile:</label>
+            <input type="tel">
+
+            <br>
+
+            <label>Email:</label>
+            <input type="email">
+
+            <br>
+
+            <label>Website URL:</label>
+            <input type="url">
+
+            <br>
+
+            <label>Progress:</label>
+            <progress value="70" max="100"></progress>
+
+            <br><br>
+
+            <input type="submit" value="Submit">
+
+            <input type="reset" value="Reset">
+
+        </fieldset>
+
+    </form>
+
+
+    <!-- Audio Section -->
+
+    <h2>Audio Element</h2>
+
+    <audio controls>
+
+        <source src="1.mp3" type="audio/mpeg">
+
+        Your browser does not support audio.
+
+    </audio>
+
+
+
+    <!-- Video Section -->
+
+    <h2>Video Element</h2>
+
+    <video width="400" controls>
+
+        <source src="1.mp4" type="video/mp4">
+
+        Your browser does not support video.
+
+    </video>
+
+
+
+    <!-- Embed Section -->
+
+    <h2>Embed Element</h2>
+
+    <embed src="sample.pdf"
+           width="400"
+           height="300">
+
+
+
+    <!-- Iframe Section -->
+
+    <h2>Iframe Element</h2>
+
+    <iframe src="https://www.wikipedia.org"
+            width="600"
+            height="300">
+
+    </iframe>
+
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        © 2026 Web Technology Lab - HTML5 Form and Media Elements
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>
