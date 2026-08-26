@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Events and Objects - URK24CS1163</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+
+        hr {
+            margin: 50px 0;
+        }
+
+        /* Digital Clock */
+        #clock {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 20px;
+        }
+
+        /* Font Size Program */
+        #message {
+            font-size: 20px;
+        }
+
+        /* Car Program */
+        #road {
+            width: 90%;
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+            margin: 20px auto;
+            border-bottom: 4px solid black;
+        }
+
+        #car {
+            position: absolute;
+            width: 180px;
+            left: 0;
+            bottom: 5px;
+        }
+
+        /* Student Details */
+        .student {
+            margin: 15px auto;
+            padding: 12px;
+            width: 400px;
+            border: 4px solid darkred;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>JavaScript Programs - URK24CS1163</h1>
+
+<hr>
+
+
+<!-- ================= PROGRAM 1 ================= -->
+
+<h2>1. Digital Clock</h2>
+
+<div id="clock"></div>
+
+<script>
+function showTime() {
+
+    var now = new Date();
+
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+
+    if (hour < 10)
+        hour = "0" + hour;
+
+    if (minute < 10)
+        minute = "0" + minute;
+
+    if (second < 10)
+        second = "0" + second;
+
+    document.getElementById("clock").innerHTML =
+        hour + ":" + minute + ":" + second;
+}
+
+showTime();
+
+setInterval(showTime, 1000);
+</script>
+
+
+<hr>
+
+
+<!-- ================= PROGRAM 2 ================= -->
+
+<h2>2. Dynamic Background Colour</h2>
+
+<p>The background colour changes automatically every 5 seconds.</p>
+
+<p id="colorText"></p>
+
+<button onclick="changeColor()">
+    Change Now
+</button>
+
+<script>
+function changeColor() {
+
+    var red = Math.floor(Math.random() * 256);
+    var green = Math.floor(Math.random() * 256);
+    var blue = Math.floor(Math.random() * 256);
+
+    var newColor =
+        "rgb(" + red + "," + green + "," + blue + ")";
+
+    document.body.style.backgroundColor = newColor;
+
+    document.getElementById("colorText").innerHTML =
+        "Current Colour: " + newColor;
+}
+
+setInterval(changeColor, 5000);
+</script>
+
+
+<hr>
+
+
+<!-- ================= PROGRAM 3 ================= -->
+
+<h2>3. Change Font Size</h2>
+
+<p id="message"
+   onmouseover="increaseFont()"
+   onmouseout="normalFont()">
+
+    Move your mouse over this text to increase its size.
+
+</p>
+
+<script>
+function increaseFont() {
+
+    document.getElementById("message").style.fontSize =
+        "32px";
+}
+
+function normalFont() {
+
+    document.getElementById("message").style.fontSize =
+        "20px";
+}
+</script>
+
+
+<hr>
+
+
+<!-- ================= PROGRAM 4 ================= -->
+
+<h2>4. Move the Car</h2>
+
+<button onclick="startCar()">
+    Start Car
+</button>
+
+<button onclick="stopCar()">
+    Stop Car
+</button>
+
+<button onclick="resetCar()">
+    Reset
+</button>
+
+<div id="road">
+
+    <img id="car"
+         src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=500"
+         alt="Car">
+
+</div>
+
+<script>
+
+var carPosition = 0;
+var carTimer;
+
+function startCar() {
+
+    clearInterval(carTimer);
+
+    carTimer = setInterval(function() {
+
+        carPosition = carPosition + 3;
+
+        document.getElementById("car").style.left =
+            carPosition + "px";
+
+        var roadWidth =
+            document.getElementById("road").clientWidth;
+
+        if (carPosition > roadWidth - 180) {
+
+            clearInterval(carTimer);
+        }
+
+    }, 20);
+}
+
+function stopCar() {
+
+    clearInterval(carTimer);
+}
+
+function resetCar() {
+
+    clearInterval(carTimer);
+
+    carPosition = 0;
+
+    document.getElementById("car").style.left = "0px";
+}
+
+</script>
+
+
+<hr>
+
+
+<!-- ================= PROGRAM 5 ================= -->
+
+<h2>5. Student Details</h2>
+
+<div id="students"></div>
+
+<script>
+
+var studentData = [
+
+    {
+        name: "Arun",
+        regno: "URK22CS1085",
+        dob: 1999
+    },
+
+    {
+        name: "Vishnu",
+        regno: "URK24CS1163",
+        dob: 2005
+    },
+
+    {
+        name: "Rahul",
+        regno: "URK23CS1124",
+        dob: 2002
+    }
+
+];
+
+for (var i = 0; i < studentData.length; i++) {
+
+    var person = studentData[i];
+
+    var category;
+
+    if (person.dob < 2000) {
+
+        category = "Born before 2000";
+    }
+    else {
+
+        category = "Born in or after 2000";
+    }
+
+    document.getElementById("students").innerHTML +=
+
+        "<div class='student'>" +
+
+        "<b>Name: " + person.name + "</b><br><br>" +
+
+        "Register Number: " + person.regno + "<br>" +
+
+        "Year of Birth: " + person.dob + "<br>" +
+
+        "Category: " + category +
+
+        "</div>";
+}
+
+</script>
+
+
+<hr>
+
+<h3>URK24CS1163 - Web Technology Lab</h3>
+
+</body>
+</html>
