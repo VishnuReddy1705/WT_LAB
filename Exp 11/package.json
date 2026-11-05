@@ -1,0 +1,27 @@
+{
+  "name": "exp11-nodejs-mongodb",
+  "version": "1.0.0",
+  "description": "Exercise 11 - Database Integration in NodeJS Application using MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose",
+    "crud"
+  ],
+  "author": "Vishnu Reddy",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

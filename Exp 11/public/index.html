@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ex. 11: Database Integration in NodeJS Application using MongoDB</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f1f5f9; color: #1e293b; padding: 24px 16px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 24px; }
+    header h1 { font-size: 1.8rem; color: #0f172a; }
+    header p { color: #64748b; margin-top: 4px; }
+    .card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .card h2 { font-size: 1.2rem; margin-bottom: 14px; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 14px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 0.85rem; font-weight: 600; color: #475569; }
+    input { padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; outline: none; }
+    input:focus { border-color: #2563eb; }
+    .btn-row { display: flex; gap: 10px; margin-top: 10px; }
+    button { padding: 8px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-secondary { background: #64748b; color: white; }
+    .btn-success { background: #059669; color: white; }
+    .btn-danger { background: #dc2626; color: white; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+    th { background: #f8fafc; font-weight: 600; color: #475569; }
+    .action-btn { padding: 4px 10px; font-size: 0.8rem; margin-right: 6px; border-radius: 4px; }
+    .output-box { background: #0f172a; color: #38bdf8; padding: 14px; border-radius: 6px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; max-height: 200px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Ex. 11: Database Integration in NodeJS with MongoDB</h1>
+      <p>NodeJS, ExpressJS & Mongoose CRUD Tester</p>
+    </header>
+
+    <!-- Insert / Update Student Form -->
+    <div class="card">
+      <h2 id="formTitle">➕ Insert / Update Student Record</h2>
+      <form id="studentForm">
+        <div class="form-grid">
+          <div class="field">
+            <label>Register Number *</label>
+            <input type="text" id="regNo" placeholder="URK23CS1001" required>
+          </div>
+          <div class="field">
+            <label>Name *</label>
+            <input type="text" id="name" placeholder="Arun Kumar" required>
+          </div>
+          <div class="field">
+            <label>Department *</label>
+            <input type="text" id="department" placeholder="Computer Science and Engineering" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="arun@gmail.com">
+          </div>
+          <div class="field">
+            <label>CGPA</label>
+            <input type="number" id="cgpa" step="0.01" min="0" max="10" placeholder="8.5">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn-primary" id="submitBtn">Save Student</button>
+          <button type="button" class="btn-secondary" id="resetBtn" onclick="resetForm()">Reset</button>
+          <button type="button" class="btn-success" onclick="fetchAllStudents()">Refresh List</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Live Records Table -->
+    <div class="card">
+      <h2>📋 All Students (Database: studentdb)</h2>
+      <table id="studentsTable">
+        <thead>
+          <tr>
+            <th>Reg No</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>CGPA</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="studentsBody">
+          <tr><td colspan="6" style="text-align:center;">Loading records...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- API Response Log -->
+    <div class="card">
+      <h2>📡 API JSON Output</h2>
+      <pre class="output-box" id="output">Waiting for actions...</pre>
+    </div>
+  </div>
+
+  <script>
+    const API = "/students";
+    let isEditing = false;
+
+    async function fetchAllStudents() {
+      try {
+        const res = await fetch(API);
+        const data = await res.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        
+        const tbody = document.getElementById('studentsBody');
+        tbody.innerHTML = '';
+        if (data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No students found in database.</td></tr>';
+          return;
+        }
+
+        data.forEach(s => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td><strong>${s.regNo}</strong></td>
+            <td>${s.name}</td>
+            <td>${s.department}</td>
+            <td>${s.email || '-'}</td>
+            <td>${s.cgpa || '-'}</td>
+            <td>
+              <button class="action-btn btn-primary" onclick="editStudent('${s.regNo}', '${s.name}', '${s.department}', '${s.email || ''}', '${s.cgpa || ''}')">Edit</button>
+              <button class="action-btn btn-danger" onclick="deleteStudent('${s.regNo}')">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        document.getElementById('output').textContent = "Error: " + err.message;
+      }
+    }
+
+    document.getElementById('studentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        regNo: document.getElementById('regNo').value,
+        name: document.getElementById('name').value,
+        department: document.getElementById('department').value,
+        email: document.getElementById('email').value,
+        cgpa: document.getElementById('cgpa').value ? Number(document.getElementById('cgpa').value) : undefined
+      };
+
+      try {
+        let res;
+        if (isEditing) {
+          res = await fetch(`${API}/${payload.regNo}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          res = await fetch(API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+        const data = await res.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        resetForm();
+        fetchAllStudents();
+      } catch (err) {
+        document.getElementById('output').textContent = "Error: " + err.message;
+      }
+    });
+
+    function editStudent(regNo, name, department, email, cgpa) {
+      isEditing = true;
+      document.getElementById('regNo').value = regNo;
+      document.getElementById('regNo').disabled = true;
+      document.getElementById('name').value = name;
+      document.getElementById('department').value = department;
+      document.getElementById('email').value = email;
+      document.getElementById('cgpa').value = cgpa;
+      document.getElementById('formTitle').textContent = "✏️ Edit Student Details";
+      document.getElementById('submitBtn').textContent = "Update Student";
+    }
+
+    function resetForm() {
+      isEditing = false;
+      document.getElementById('studentForm').reset();
+      document.getElementById('regNo').disabled = false;
+      document.getElementById('formTitle').textContent = "➕ Insert / Update Student Record";
+      document.getElementById('submitBtn').textContent = "Save Student";
+    }
+
+    async function deleteStudent(regNo) {
+      if (!confirm(`Delete student ${regNo}?`)) return;
+      try {
+        const res = await fetch(`${API}/${regNo}`, { method: 'DELETE' });
+        const data = await res.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        fetchAllStudents();
+      } catch (err) {
+        document.getElementById('output').textContent = "Error: " + err.message;
+      }
+    }
+
+    fetchAllStudents();
+  </script>
+</body>
+</html>
