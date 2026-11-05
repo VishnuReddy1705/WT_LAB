@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tourist Registration - URK24CS1163</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80')
+        no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      color: #333;
+    }
+
+    .header-banner {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 25px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-banner h1 {
+      font-size: 32px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .header-banner p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      width: 100%;
+      max-width: 540px;
+      padding: 35px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: #1e3a8a;
+      font-size: 24px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.25s ease;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .inline-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 4px;
+      font-size: 14px;
+      color: #475569;
+    }
+
+    .inline-options label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.15s ease;
+      margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    footer {
+      margin-top: 30px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 13px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-banner">
+    <h1>Explore the World - URK24CS1163</h1>
+    <p>Your journey begins here!</p>
+  </div>
+
+  <div class="form-container">
+    <h2>Tourist Registration Form</h2>
+
+    <form action="/server" method="POST" id="regForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="URK24CS1163" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required />
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="1" max="120" placeholder="20" required />
+      </div>
+
+      <div class="form-group">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="9876543210" title="10-digit mobile number" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="urk24cs1163@karunya.edu.in" required />
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="inline-options">
+          <label><input type="radio" name="gender" value="Male" required checked /> Male</label>
+          <label><input type="radio" name="gender" value="Female" required /> Female</label>
+          <label><input type="radio" name="gender" value="Other" required /> Other</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="state">State</label>
+        <select id="state" name="state" required>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Karnataka">Karnataka</option>
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Delhi">Delhi</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="destination">Preferred Tourist Destination</label>
+        <select id="destination" name="destination" required>
+          <option value="Goa">Goa</option>
+          <option value="Manali">Manali</option>
+          <option value="Ooty">Ooty</option>
+          <option value="Kodaikanal">Kodaikanal</option>
+          <option value="Munnar">Munnar</option>
+          <option value="Jaipur">Jaipur</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Travel Interests / Skills</label>
+        <div class="inline-options">
+          <label><input type="checkbox" name="skills" value="Adventure" checked /> Adventure</label>
+          <label><input type="checkbox" name="skills" value="Nature" checked /> Nature</label>
+          <label><input type="checkbox" name="skills" value="Beaches" checked /> Beaches</label>
+          <label><input type="checkbox" name="skills" value="Heritage" /> Heritage</label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Register Now</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2026 Explore the World - URK24CS1163 | Discover. Travel. Enjoy.
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "tourism-app-urk24cs1163",
+  "version": "1.0.0",
+  "description": "Tourism Registration using Node.js and MongoDB - URK24CS1163",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.8.0"
+  }
+}
